@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option csharp_namespace = "ClubService";
+
+service GrpcClub {
+    rpc GetAllClubs (GetAllRequest) returns (ClubResponse);
+}
+
+message GetAllRequest {}
+
+message GrpcClubModel{
+    int32 clubId = 1;
+    string name = 2;
+}
+
+message ClubResponse {
+    repeated GrpcClubModel club = 1;
+}

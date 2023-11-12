@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clubs-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clubservice
+  template:
+    metadata:
+      labels:
+        app: clubservice
+    spec:
+      containers:
+        - name: clubservice
+          image: cathalkeany/clubservice:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clubservice-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: clubservice
+  ports:
+  - name: clubservice
+    protocol: TCP
+    port: 80
+    targetPort: 80
+  - name: clubgrpc
+    protocol: TCP
+    port: 666
+    targetPort: 666

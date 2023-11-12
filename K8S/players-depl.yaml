@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: players-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: playerservice
+  template:
+    metadata:
+      labels:
+        app: playerservice
+    spec:
+      containers:
+        - name: playerservice
+          image: cathalkeany/playerservice:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: playerservice-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: playerservice
+  ports:
+  - name: playerservice
+    protocol: TCP
+    port: 80
+    targetPort: 80
